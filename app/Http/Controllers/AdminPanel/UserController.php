@@ -5,14 +5,29 @@ namespace App\Http\Controllers\AdminPanel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+
+    private $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $users = User::all();
+        $this->userRepository = $userRepository;
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        // dd($request->all());
+        $users =  $this->userRepository->getUsersWithFilters($request);
         return view('admin-panel.users.index', compact('users'));
     }
 
@@ -58,5 +73,11 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin-panel.users.index')->with(['success', "User updated successfully."]);
+    }
+
+    public function destroyUser(User $user): RedirectResponse
+    {
+        $user->delete();
+        return back()->with(['success' => true, 'message' => "User deleted successfully."]);
     }
 }

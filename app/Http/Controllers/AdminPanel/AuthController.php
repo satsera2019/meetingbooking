@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('admin-panel.login');
+        return (auth()->check()) ? redirect()->route('admin-panel.users.index') : view('admin-panel.login');
     }
 
     public function login(LoginRequest $request): RedirectResponse
@@ -26,7 +26,7 @@ class AuthController extends Controller
         return redirect()->back();
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
@@ -34,7 +34,7 @@ class AuthController extends Controller
 
         return redirect()->route('admin-panel.loginform');
     }
-    
+
     public function registerform()
     {
         return view('admin-panel.register');
@@ -51,7 +51,7 @@ class AuthController extends Controller
         ]);
         if ($user) {
             Auth::login($user);
-            return redirect(route("wallets.index"))->with(['message' => "Registration completed successfully."]);
+            return redirect(route("admin-panel.loginform"))->with(['message' => "Registration completed successfully."]);
         }
         return back()->with(['error' => 'Something went wrong, try again.']);
     }

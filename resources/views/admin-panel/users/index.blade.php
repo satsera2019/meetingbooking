@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="check-disable" action="/" method="get">
+                <form class="check-disable" action="" method="GET">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-3 col-md-3 col-sm-6 col-12">
@@ -68,6 +68,7 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Registration Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -78,32 +79,31 @@
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->role }}</td>
+                                <td>{{ $user->created_at }}</td>
                                 <td>
                                     <div class="row">
                                         <a href="{{ route('admin-panel.users.edit', $user) }}">
                                             <button type="button" class="btn btn-outline-primary btn-sm col"><i
                                                     class="fa-solid fa-edit"></i> edit</button>
                                         </a>
-                                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                                            data-target="#destroy-user-modal-{{ $user->id }}">
+                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#destroy-user-modal-{{ $user->id }}">
                                             <i class="fa fa-trash" aria-hidden="true"></i>Delete
                                         </button>
                                     </div>
                                 </td>
                             </tr>
 
-
-                            <div class="modal fade" id="destroy-user-modal-{{ $user->id }}">
+                            <div class="modal fade" id="destroy-user-modal-{{ $user->id }}" tabindex="-1"
+                                aria-labelledby="destroy-user-modal-{{ $user->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Delete User</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                            <h1 class="modal-title fs-5" id="destroy-user-modal-{{ $user->id }}">Delete
+                                                User</h1>
                                         </div>
                                         <div class="modal-body d-flex flex-column align-items-center">
-                                            {{ $user->full_name }}
+                                            {{ $user->first_name }} {{ $user->last_name }}
                                         </div>
                                         <form action="{{ route('admin-panel.users.destroy', ['user' => $user]) }}"
                                             method="POST">
@@ -113,7 +113,7 @@
                                                 <button type="submit" class="btn btn-success float-right">
                                                     Yes
                                                 </button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                                                     No
                                                 </button>
                                             </div>
@@ -121,12 +121,11 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         @endforeach
                     </tbody>
                 </table>
             </div>
+
 
             <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
