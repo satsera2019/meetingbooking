@@ -26,13 +26,13 @@ class AuthController extends Controller
         return redirect()->back();
     }
 
-    public function logout(LoginRequest $request): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin-panel.auth.show-login-form');
+        return redirect()->route('admin-panel.loginform');
     }
     
     public function registerform()
@@ -42,7 +42,6 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request): RedirectResponse
     {
-        // dd($request->all());
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
