@@ -23,10 +23,10 @@ class UserRepository implements UserRepositoryInterface
         return $query->get()->sortByDesc('id');
     }
 
-    public function getAllUsers()
-    {
-        return User::all();
-    }
+    // public function getAllUsers()
+    // {
+    //     return User::all();
+    // }
 
 
 

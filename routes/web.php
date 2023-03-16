@@ -47,6 +47,10 @@ Route::namespace('AdminPanel')->name('admin-panel.')->prefix('admin-panel')->gro
 
         Route::prefix('rooms')->name('rooms.')->group(function () {
             Route::get('/', [RoomController::class, 'index'])->name('index');
+            Route::get('/create', [RoomController::class, 'create'])->name('create');
+            Route::post('/create', [RoomController::class, 'store'])->name('store');
+            Route::get('/{room}', [RoomController::class, 'edit'])->name('edit');
+            Route::post('/{room}', [RoomController::class, 'update'])->name('update');
         });
     });
 });
