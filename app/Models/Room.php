@@ -30,6 +30,16 @@ class Room extends Model
 
     public function bookingSlots()
     {
-        return $this->hasMany(BookingSlot::class);
+        return $this->hasMany(BookingSlot::class)->orderBy('day_of_week');
+    }
+
+    public function bookingSlotByDate($start)
+    {
+        return $this->hasMany(BookingSlot::class)->where('start_time' >= '')->orderBy('day_of_week');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(RoomImage::class, 'room_id');
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('room_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users');

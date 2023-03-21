@@ -18,5 +18,16 @@ class BookingSlot extends Model
         'end_time',
         'day_of_week',
         'day',
+        'is_active',
+    ];
+
+    const DAY_OF_WEEK = [
+        0 => 'monday',
+        1 => 'tuesday',
+        2=> 'wednesday',
+        3 => 'thursday',
+        4 => 'friday',
+        5 => 'saturday',
+        6 => 'sunday',
     ];
 }

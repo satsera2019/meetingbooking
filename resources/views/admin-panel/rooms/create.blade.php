@@ -9,7 +9,8 @@
         <div class="card-body">add room</div>
     </div>
     <div class="card card-primary col-12">
-        <form class="check-disable" action="{{ route('admin-panel.rooms.store') }}" method="post">
+        <form class="check-disable" onsubmit="generateDates()" action="{{ route('admin-panel.rooms.store') }}"
+            enctype="multipart/form-data" method="post">
             @csrf
             <div class="card-body">
                 <div class="row">
@@ -54,39 +55,43 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="form-group clearfix">
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="monday" name="day_of_week[1]" value="monday" checked>
-                                <label for="monday">Monday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="tuesday" name="day_of_week[2]" value="tuesday" checked>
-                                <label for="tuesday">Tuesday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="wednesday" name="day_of_week[3]" value="wednesday" checked>
-                                <label for="wednesday">Wednesday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="thursday" name="day_of_week[4]" value="thursday" checked>
-                                <label for="thursday">Thursday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="friday" name="day_of_week[5]" value="friday" checked>
-                                <label for="friday">Friday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="saturday" name="day_of_week[6]" value="saturday">
-                                <label for="saturday">Saturday</label>
-                            </div>
-                            <div class="icheck-success d-inline">
-                                <input type="checkbox" id="sunday" name="day_of_week[7]" value="sunday">
-                                <label for="sunday">Sunday</label>
-                            </div>
+                            @foreach ($day_of_weeks as $key => $day)
+                                <div class="row">
+                                    <div class="form-group col-1">
+                                        <input type="hidden" name="day_of_week[{{ $key }}][day_of_week]"
+                                            value="{{ $key }}">
+                                        <input type="checkbox" id="{{ $day }}"
+                                            name="day_of_week[{{ $key }}][is_active]" value="1">
+                                        <label for="monday">{{ $day }}</label>
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <label for="location">start time</label>
+                                        <input type="time" class="form-control"
+                                            name="day_of_week[{{ $key }}][start_time]"
+                                            step="600" min="09:00" max="17:00">
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <label for="location">end time</label>
+                                        <input type="time" class="form-control"
+                                            name="day_of_week[{{ $key }}][end_time]">
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
+                    </div> --}}
+
+                    <div>
+                        <label>Choose Images</label>
+                        <input id="images" type="file" class="form-control" name="images[]" placeholder="address" multiple>
                     </div>
+
+                    
+
                 </div>
+
+                <div class="images-preview-div"> </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-success float-right btn-check-disable">
@@ -98,4 +103,26 @@
             </div>
         </form>
     </div>
+
+    <script>
+        $(function() {
+            var previewImages = function(input, imgPreviewPlaceholder) {
+                if (input.files) {
+                    console.log(input.files);
+                    var filesAmount = input.files.length;
+                    for (i = 0; i < filesAmount; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
+                                imgPreviewPlaceholder);
+                        }
+                        reader.readAsDataURL(input.files[i]);
+                    }
+                }
+            };
+            $('#images').on('change', function() {
+                previewImages(this, 'div.images-preview-div');
+            });
+        });
+    </script>
 @endsection

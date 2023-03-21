@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('room_id');
             $table->string('image_url');
-            $table->string('caption')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('room_id')->references('id')->on('rooms');

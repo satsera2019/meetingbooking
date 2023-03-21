@@ -48,7 +48,17 @@
 
 @if (session()->has('errors'))
     <script>
-        toastr.error("{{ session()->get('errors') }}");
+        $(document).ready(function() {
+            toastr.error("{{ session()->get('errors')->first() }}");
+        });
+    </script>
+@endif
+
+@if (session()->has('message'))
+    <script>
+        $(document).ready(function() {
+            toastr.success("{{ session()->get('message') }}");
+        });
     </script>
 @endif
 

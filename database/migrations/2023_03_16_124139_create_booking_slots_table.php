@@ -18,6 +18,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->integer('day_of_week');
             $table->string('day', 255);
+            $table->integer('is_active');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('room_id')->references('id')->on('rooms');

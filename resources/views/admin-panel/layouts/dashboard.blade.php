@@ -43,7 +43,7 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('admin-panel.rooms.index') }}" class="nav-link @if (Request::segment(2) == 'rooms') active @endif">
-                                    <i class="nav-icon fa fa-users"></i>
+                                    <i class="nav-icon fa fa-building" aria-hidden="true"></i>
                                     <p>Rooms</p>
                                 </a>
                             </li>

@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CreateRoomRequest extends FormRequest
+class UpdateRoomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +28,9 @@ class CreateRoomRequest extends FormRequest
             'location' => ['required', 'string', 'max:255'],
             'capacity' => ['nullable', 'numeric'],
             'equipment' => ['nullable', 'string'],
+            'start_time' => ['time'],
+            'end_time' => ['time'],
             'status' => ['string'],
-
-            'images' => ['required'],
-            'images.*' => ['image|size:1024'],
-            // mimes:jpeg,png,jpg,gif|
         ];
     }
 }

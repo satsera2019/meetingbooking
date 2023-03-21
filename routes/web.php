@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminPanel\AuthController;
 use App\Http\Controllers\AdminPanel\RoomController;
 use App\Http\Controllers\AdminPanel\UserController;
+use App\Http\Controllers\UserPanel\BookingController;
+use App\Http\Controllers\UserPanel\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,18 +23,34 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('index');
-});
+    return view('user-panel.layouts.app');
+})->name('home');
 
+Route::namespace('UserPanel')->name('user-panel.')->prefix('user-panel')->group(function () {
+    Route::get('/', [MainController::class, 'loginForm'])->name('loginform');
+    Route::post('/login', [MainController::class, 'login'])->name('login');
+    Route::get('/logout', [MainController::class, 'logout'])->name('logout');
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/index', [MainController::class, 'index'])->name('index');
+
+        Route::prefix('bookings')->name('bookings.')->group(function () {
+            Route::get('/index', [BookingController::class, 'index'])->name('index');
+
+            Route::get('/create', [BookingController::class, 'create'])->name('create');
+            Route::post('/{room}/store', [BookingController::class, 'store'])->name('store');
+        });
+    });
+});
 
 Route::namespace('AdminPanel')->name('admin-panel.')->prefix('admin-panel')->group(function () {
     Route::get('/', [AuthController::class, 'index'])->name('loginform');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/registerform', [AuthController::class, 'registerform'])->name('registerform');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware(['admin-auth', 'check-admin'])->group(function () {
 
@@ -51,6 +69,7 @@ Route::namespace('AdminPanel')->name('admin-panel.')->prefix('admin-panel')->gro
             Route::post('/create', [RoomController::class, 'store'])->name('store');
             Route::get('/{room}', [RoomController::class, 'edit'])->name('edit');
             Route::post('/{room}', [RoomController::class, 'update'])->name('update');
+            Route::delete('/{room}/destroy', [RoomController::class, 'destroyRoom'])->name('destroy');
         });
     });
 });
