@@ -23,6 +23,29 @@ class UserRepository implements UserRepositoryInterface
         return $query->get()->sortByDesc('id');
     }
 
+    public function createUser($request)
+    {
+        return User::create([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'role' => 'user',
+        ]);
+    }
+
+
+    public function updateUser($request, $user)
+    {
+        return $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email ?? $user->email,
+            'role' => $request->role,
+            'comment' => $request->comment,
+        ]);
+    }
+
     // public function getAllUsers()
     // {
     //     return User::all();

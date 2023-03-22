@@ -8,18 +8,21 @@ use App\Http\Requests\UpdateRoomRequest;
 use App\Models\BookingSlot;
 use App\Models\Room;
 use App\Models\RoomImage;
+use App\Repositories\Interfaces\BookingSlotRepositoryInterface;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Image;
+use App\Repositories\RoomImageRepository;
 
 class RoomController extends Controller
 {
     private $roomRepository;
+    private $bookingSlotRepository;
 
-    public function __construct(RoomRepositoryInterface $roomRepository)
+    public function __construct(RoomRepositoryInterface $roomRepository, BookingSlotRepositoryInterface $bookingSlotRepository)
     {
         $this->roomRepository = $roomRepository;
+        $this->bookingSlotRepository = $bookingSlotRepository;
     }
 
     /**
@@ -42,37 +45,12 @@ class RoomController extends Controller
 
     public function store(CreateRoomRequest $request)
     {
-        $room = Room::create([
-            'room_number' => $request->room_number,
-            'room_name' => $request->room_name,
-            'location' => $request->location,
-            'capacity' => $request->capacity,
-            'equipment' => $request->equipment,
-        ]);
-
-        $day_of_weeks = BookingSlot::DAY_OF_WEEK;
-        foreach ($day_of_weeks as $key => $value) {
-            BookingSlot::create([
-                'room_id' => $room->id,
-                'start_time' => '09:00:00',
-                'end_time' => '17:00:00',
-                'day_of_week' => $key,
-                'day' => $value,
-                'is_active' => (in_array($key, [5, 6])) ? 0 : 1,
-            ]);
-        }
-
+        $validatedData = $request->validated();
+        $room = $this->roomRepository->createRoom($validatedData);
+        $this->bookingSlotRepository->createBookingSlot($room->id);
         if ($request->images) {
-            foreach ($request->images as $key => $image) {
-                $imageName = time() . rand(1, 99) . '.' . $image->extension();
-                $image->move(public_path('images/room_image'), $imageName);
-                $images[]['name'] = $imageName;
-
-                RoomImage::create([
-                    'room_id' => $room->id,
-                    'image_url' => $imageName,
-                ]);
-            }
+            $roomImageRepository = new RoomImageRepository();
+            $roomImageRepository->createRoomImages($request->images, $room->id);
         }
 
         return redirect()->route('admin-panel.rooms.index')->with(['message' => "Room created successfully."]);

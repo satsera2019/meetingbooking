@@ -28,4 +28,15 @@ class RoomRepository implements RoomRepositoryInterface
         }
         return $query->get()->sortByDesc('id');
     }
+
+    public function createRoom($request)
+    {
+        return Room::create([
+            'room_number' => $request['room_number'],
+            'room_name' => $request['room_name'],
+            'location' => $request['location'],
+            'capacity' => $request['capacity'],
+            'equipment' => $request['equipment'],
+        ]);
+    }
 }

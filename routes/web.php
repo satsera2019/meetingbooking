@@ -26,6 +26,8 @@ Route::get('/', function () {
     return view('user-panel.layouts.app');
 })->name('home');
 
+Route::get('/tablet', [MainController::class, 'tablet'])->name('tablet');
+
 Route::namespace('UserPanel')->name('user-panel.')->prefix('user-panel')->group(function () {
     Route::get('/', [MainController::class, 'loginForm'])->name('loginform');
     Route::post('/login', [MainController::class, 'login'])->name('login');
@@ -36,9 +38,9 @@ Route::namespace('UserPanel')->name('user-panel.')->prefix('user-panel')->group(
 
         Route::prefix('bookings')->name('bookings.')->group(function () {
             Route::get('/index', [BookingController::class, 'index'])->name('index');
-
             Route::get('/create', [BookingController::class, 'create'])->name('create');
             Route::post('/{room}/store', [BookingController::class, 'store'])->name('store');
+            Route::delete('/{booking}/destroy', [BookingController::class, 'destroyBooking'])->name('destroy');
         });
     });
 });

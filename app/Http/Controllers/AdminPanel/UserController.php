@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminPanel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Booking;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +13,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     private $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository)
@@ -38,14 +38,9 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => 'user',
-        ]);
-        return redirect()->route('admin-panel.users.index')->with(['success', "User created successfully."]);
+        $validatedData = $request->validated();
+        $this->userRepository->createUser($validatedData);
+        return redirect()->route('admin-panel.users.index')->with(['message' => "User created successfully."]);
     }
 
     public function edit(User $user)
@@ -55,29 +50,20 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $request->validate([
-            'email' => 'unique:users,email,' . $user->id
-        ]);
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email ?? $user->email,
-            'role' => $request->role,
-            'comment' => $request->comment,
-        ]);
+        $request->validate(['email' => 'unique:users,email,' . $user->id]);
+        $this->userRepository->updateUser($request, $user);
 
         if ($request->password) {
-            $user->update([
-                'password' => bcrypt($request->password)
-            ]);
+            $user->update(['password' => bcrypt($request->password)]);
         }
 
-        return redirect()->route('admin-panel.users.index')->with(['success', "User updated successfully."]);
+        return redirect()->route('admin-panel.users.index')->with(['success' => true, 'message' => "User updated successfully."]);
     }
 
     public function destroyUser(User $user): RedirectResponse
     {
         $user->delete();
+        Booking::where('user_id', $user->id)->delete();
         return back()->with(['success' => true, 'message' => "User deleted successfully."]);
     }
 }
