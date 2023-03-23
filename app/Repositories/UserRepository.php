@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -20,7 +21,7 @@ class UserRepository implements UserRepositoryInterface
         if ($request->has('email') and $request->get('email') !== null) {
             $query->where('email', $request->get('email'));
         }
-        return $query->get()->sortByDesc('id');
+        return $query->orderBy('id', 'DESC')->paginate(15);
     }
 
     public function createUser($request)
@@ -29,11 +30,10 @@ class UserRepository implements UserRepositoryInterface
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name'],
             'email' => $request['email'],
-            'password' => bcrypt($request['password']),
+            'password' => Hash::make($request['password']),
             'role' => 'user',
         ]);
     }
-
 
     public function updateUser($request, $user)
     {
@@ -46,40 +46,15 @@ class UserRepository implements UserRepositoryInterface
         ]);
     }
 
-    // public function getAllUsers()
-    // {
-    //     return User::all();
-    // }
-
-
-
-    /* public function getAllOrders()
+    public function checkUserValid(int $user_id, string $password)
     {
-        return Order::all();
+        $user = User::where('id', $user_id)->first();
+        if (!$user) {
+            return ["success" => false, "message" => "User not found."];
+        }
+        if (!Hash::check($password, $user->password)) {
+            return ["success" => false, "message" => "Incorrect password."];
+        }
+        return ["success" => true, "message" => "User data is valid."];
     }
-
-    public function getOrderById($orderId)
-    {
-        return Order::findOrFail($orderId);
-    }
-
-    public function deleteOrder($orderId)
-    {
-        Order::destroy($orderId);
-    }
-
-    public function createOrder(array $orderDetails)
-    {
-        return Order::create($orderDetails);
-    }
-
-    public function updateOrder($orderId, array $newDetails)
-    {
-        return Order::whereId($orderId)->update($newDetails);
-    }
-
-    public function getFulfilledOrders()
-    {
-        return Order::where('is_fulfilled', true);
-    } */
 }

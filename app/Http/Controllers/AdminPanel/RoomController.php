@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminPanel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
+use App\Models\Booking;
 use App\Models\BookingSlot;
 use App\Models\Room;
 use App\Models\RoomImage;
@@ -32,7 +33,7 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $rooms =  $this->roomRepository->getRoomsWithFilters($request);
+        $rooms = $this->roomRepository->getRoomsWithFilters($request);
         $room_statuses = Room::ROOM_STATUSES;
         return view('admin-panel.rooms.index', compact('rooms', 'room_statuses'));
     }
@@ -90,6 +91,8 @@ class RoomController extends Controller
     {
         $room->delete();
         BookingSlot::where('room_id', $room->id)->delete();
+        Booking::where('room_id', $room->id)->delete();
+        RoomImage::where('room_id', $room->id)->delete();
         return back()->with(['success' => true, 'message' => "Room deleted successfully."]);
     }
 }

@@ -21,6 +21,12 @@ class BookingRepository implements BookingRepositoryInterface
         return $query->get()->sortByDesc('id');
     }
 
+    public function getBookingByRoom($room_id)
+    {
+        $query = Booking::where('room_id', $room_id)->where('start_time', '>=', Carbon::today())->where('end_time', '<=', Carbon::tomorrow());
+        return $query->get()->sortByDesc('id');
+    }
+
     public function getUserBookingWithFilters($request)
     {
         $query = Booking::where('user_id', auth()->user()->id);
@@ -38,7 +44,7 @@ class BookingRepository implements BookingRepositoryInterface
         $slotRepo = new BookingSlotRepository;
         $slot = $slotRepo->getSlotByDay($start_time, $room_id);
         // Non-working day check
-        if($slot->is_active === 0){ 
+        if ($slot->is_active === 0) {
             return ["success" => false, "message" => "Booking is not possible today."];
         }
         // Check during the day

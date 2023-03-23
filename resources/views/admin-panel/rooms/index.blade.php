@@ -179,6 +179,8 @@
                     <li class="page-item"><a class="page-link" href="#">»</a></li>
                 </ul>
             </div>
+
+            {{ $rooms->links() }}
         </div>
     </div>
 @endsection

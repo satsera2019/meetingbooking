@@ -26,7 +26,7 @@ class RoomRepository implements RoomRepositoryInterface
         if ($request->has('equipment') and $request->get('equipment') !== null) {
             $query->where('equipment', 'LIKE', '%' . $request->get('equipment') . '%');
         }
-        return $query->get()->sortByDesc('id');
+        return $query->orderBy('id', 'DESC')->paginate(15);
     }
 
     public function createRoom($request)

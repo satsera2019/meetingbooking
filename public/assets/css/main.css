@@ -1,0 +1,28 @@
+.color-blue{
+    color: #213855 !important;
+}
+
+.bg-blue{
+    background-color: #213855 !important;
+}
+
+.blue-btn{
+    background-color: #213855 !important;
+    color: #fff !important;
+    border: #fff !important;
+}
+
+.blue-btn:hover{
+    background-color: #ffc43b !important;
+    border: #fff !important;
+}
+
+.nav-link:hover{
+    color: #ffc43b !important;
+}
+
+.btn-booking{
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+}

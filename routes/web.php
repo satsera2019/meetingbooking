@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminPanel\AuthController;
 use App\Http\Controllers\AdminPanel\RoomController;
 use App\Http\Controllers\AdminPanel\UserController;
+use App\Http\Controllers\TabletPanel\TabletController;
 use App\Http\Controllers\UserPanel\BookingController;
 use App\Http\Controllers\UserPanel\MainController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,18 @@ Route::get('/', function () {
     return view('user-panel.layouts.app');
 })->name('home');
 
-Route::get('/tablet', [MainController::class, 'tablet'])->name('tablet');
+Route::namespace('TabletPanel')->name('tablet-panel.')->prefix('/tablet-panel')->group(function () {
+    Route::get('/', [TabletController::class, 'index'])->name('index');
+
+    Route::prefix('rooms')->name('rooms.')->group(function () {
+        Route::get('/index', [TabletController::class, 'rooms'])->name('index');
+        Route::get('/room/{room}', [TabletController::class, 'roomDetail'])->name('detail');
+    });
+
+    Route::post('/booking/{room}', [TabletController::class, 'createBooking'])->name('booking.create');
+
+    Route::get('/meetings', [TabletController::class, 'meetings'])->name('meetings');
+});
 
 Route::namespace('UserPanel')->name('user-panel.')->prefix('user-panel')->group(function () {
     Route::get('/', [MainController::class, 'loginForm'])->name('loginform');
