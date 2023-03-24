@@ -48,15 +48,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($bookings as $booking)
-                <tr>
-                    <td>{{ $booking->room->room_name }}</td>
-                    <td>{{ $booking->room->location }}</td>
-                    <td>{{ $booking->start_time }}</td>
-                    <td>{{ $booking->end_time }}</td>
-                </tr>
-            @endforeach
-
+            @if (count($bookings) === 0)
+                <td colspan="12" class="text-center">No data available in table.</td>
+            @else
+                @foreach ($bookings as $booking)
+                    <tr>
+                        <td>{{ $booking->room->room_name }}</td>
+                        <td>{{ $booking->room->location }}</td>
+                        <td>{{ $booking->start_time }}</td>
+                        <td>{{ $booking->end_time }}</td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 @endsection

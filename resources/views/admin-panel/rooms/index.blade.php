@@ -94,92 +94,85 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($rooms as $room)
-                            <tr>
-                                <td>{{ $room->room_number ?? '-' }}</td>
-                                <td>{{ $room->room_name ?? '-' }}</td>
-                                <td>{{ $room->location ?? '-' }}</td>
-                                <td>{{ $room->capacity ?? '-' }}</td>
-                                <td>{{ $room->equipment ?? '-' }}</td>
-                                <td>
-                                    @if ($room->status === $room_statuses['AVAILABLE_STATUS'])
-                                        <small class="badge badge-success">
-                                            <i class="far fa-clock"></i>
+                        @if (count($rooms) == 0)
+                            <td colspan="12" class="text-center">No data available in table.</td>
+                        @else
+                            @foreach ($rooms as $room)
+                                <tr>
+                                    <td>{{ $room->room_number ?? '-' }}</td>
+                                    <td>{{ $room->room_name ?? '-' }}</td>
+                                    <td>{{ $room->location ?? '-' }}</td>
+                                    <td>{{ $room->capacity ?? '-' }}</td>
+                                    <td>{{ $room->equipment ?? '-' }}</td>
+                                    <td>
+                                        @if ($room->status === $room_statuses['AVAILABLE_STATUS'])
+                                            <small class="badge badge-success">
+                                                <i class="far fa-clock"></i>
+                                                {{ $room->status ?? '-' }}
+                                            </small>
+                                        @elseif($room->status === $room_statuses['UNAVAILABLE_STATUS'])
+                                            <small class="badge badge-danger">
+                                                <i class="far fa-clock"></i>
+                                                {{ $room->status ?? '-' }}
+                                            </small>
+                                        @elseif($room->status === $room_statuses['BOOKED_STATUS'])
+                                            <small class="badge badge-warning">
+                                                <i class="far fa-clock"></i>
+                                                {{ $room->status ?? '-' }}
+                                            </small>
+                                        @else
                                             {{ $room->status ?? '-' }}
-                                        </small>
-                                    @elseif($room->status === $room_statuses['UNAVAILABLE_STATUS'])
-                                        <small class="badge badge-danger">
-                                            <i class="far fa-clock"></i>
-                                            {{ $room->status ?? '-' }}
-                                        </small>
-                                    @elseif($room->status === $room_statuses['BOOKED_STATUS'])
-                                        <small class="badge badge-warning">
-                                            <i class="far fa-clock"></i>
-                                            {{ $room->status ?? '-' }}
-                                        </small>
-                                    @else
-                                        {{ $room->status ?? '-' }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="row">
-                                        <a href="{{ route('admin-panel.rooms.edit', $room) }}">
-                                            <button type="button" class="btn btn-outline-primary btn-sm col"><i
-                                                    class="fa-solid fa-edit"></i> edit</button>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger btn-sm col"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#destroy-room-modal-{{ $room->id }}">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <a href="{{ route('admin-panel.rooms.edit', $room) }}">
+                                                <button type="button" class="btn btn-outline-primary btn-sm col"><i
+                                                        class="fa-solid fa-edit"></i> edit</button>
+                                            </a>
+                                            <button type="button" class="btn btn-outline-danger btn-sm col"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#destroy-room-modal-{{ $room->id }}">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
 
 
-                            <div class="modal fade" id="destroy-room-modal-{{ $room->id }}" tabindex="-1"
-                                aria-labelledby="destroy-room-modal-{{ $room->id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="destroy-room-modal-{{ $room->id }}">
-                                                Delete
-                                                Room</h1>
-                                        </div>
-                                        <div class="modal-body d-flex flex-column align-items-center">
-                                            {{ $room->room_number }} {{ $room->room_name }}
-                                        </div>
-                                        <form action="{{ route('admin-panel.rooms.destroy', ['room' => $room]) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="submit" class="btn btn-success float-right">
-                                                    Yes
-                                                </button>
-                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                                    No
-                                                </button>
+                                <div class="modal fade" id="destroy-room-modal-{{ $room->id }}" tabindex="-1"
+                                    aria-labelledby="destroy-room-modal-{{ $room->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="destroy-room-modal-{{ $room->id }}">
+                                                    Delete Room</h1>
                                             </div>
-                                        </form>
+                                            <div class="modal-body d-flex flex-column align-items-center">
+                                                {{ $room->room_number }} {{ $room->room_name }}
+                                            </div>
+                                            <form action="{{ route('admin-panel.rooms.destroy', ['room' => $room]) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="submit" class="btn btn-success float-right">
+                                                        Yes
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">
+                                                        No
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
-
-            <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                    <li class="page-item"><a class="page-link" href="#">«</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-            </div>
-
             {{ $rooms->links() }}
         </div>
     </div>

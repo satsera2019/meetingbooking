@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Validator;
 
 class CreateRoomRequest extends FormRequest
 {
@@ -31,7 +30,7 @@ class CreateRoomRequest extends FormRequest
             'status' => ['string'],
 
             'images' => ['required'],
-            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'dimensions:min_width=1000,min_height=1000'],
         ];
     }
 }

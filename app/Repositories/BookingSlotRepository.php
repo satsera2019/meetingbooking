@@ -31,4 +31,17 @@ class BookingSlotRepository implements BookingSlotRepositoryInterface
         $dayOfWeek = $carbonDatetime->format('l');
         return BookingSlot::where('room_id', $room_id)->where('day', $dayOfWeek)->first();
     }
+
+    public function updateBookinkSlot(array $days_of_week, int $room_id)
+    {
+        foreach ($days_of_week as $value) {
+            $slot = BookingSlot::where('room_id', $room_id)->where('day_of_week', $value['day_of_week']);
+            $slot->update([
+                'start_time' => $value['start_time'],
+                'end_time' => $value['end_time'],
+                'is_active' => (isset($value['is_active'])) ? 1 : 0,
+            ]);
+        }
+        return ["success" => true, "message" => "Booking slot updated successfully."];
+    }
 }

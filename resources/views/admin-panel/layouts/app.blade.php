@@ -62,4 +62,12 @@
     </script>
 @endif
 
+@if (session()->has('error'))
+    <script>
+        $(document).ready(function() {
+            toastr.error("{{ session()->get('error') }}");
+        });
+    </script>
+@endif
+
 </html>

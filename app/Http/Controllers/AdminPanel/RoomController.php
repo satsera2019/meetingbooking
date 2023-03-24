@@ -66,25 +66,14 @@ class RoomController extends Controller
 
     public function update(UpdateRoomRequest $request, Room $room)
     {
-        $room->update([
-            'room_number' => $request->room_number,
-            'room_name' => $request->room_name,
-            'location' => $request->location,
-            'capacity' => $request->capacity,
-            'equipment' => $request->equipment,
-            'status' => $request->status,
-        ]);
-
-        foreach ($request['day_of_week'] as $value) {
-            $slot = BookingSlot::where('room_id', $room->id)->where('day_of_week', $value['day_of_week']);
-            $slot->update([
-                'start_time' => $value['start_time'],
-                'end_time' => $value['end_time'],
-                'is_active' => (isset($value['is_active'])) ? 1 : 0,
-            ]);
+        $validatedData = $request->validated();
+        $this->roomRepository->updateRoom($room, $validatedData);
+        $this->bookingSlotRepository->updateBookinkSlot($request['day_of_week'], $room->id);
+        if ($request->images && $request->images[0] != null) {
+            $roomImageRepository = new RoomImageRepository();
+            $roomImageRepository->createRoomImages($request->images, $room->id);
         }
-
-        return redirect()->route('admin-panel.rooms.index')->with(['message' => "Room updated successfully."]);
+        return redirect()->route('admin-panel.rooms.edit', $room)->with(['message' => "Room updated successfully."]);
     }
 
     public function destroyRoom(Room $room): RedirectResponse
@@ -94,5 +83,12 @@ class RoomController extends Controller
         Booking::where('room_id', $room->id)->delete();
         RoomImage::where('room_id', $room->id)->delete();
         return back()->with(['success' => true, 'message' => "Room deleted successfully."]);
+    }
+
+
+    public function destroyImage(RoomImage $image): RedirectResponse
+    {
+        $image->delete();
+        return back()->with(['success' => true, 'message' => "Image deleted successfully."]);
     }
 }

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->integer('room_number');
-            $table->string('room_name', 255)->nullable();
+            $table->string('room_name', 255);
             $table->string('location', 255);
-            $table->integer('capacity')->nullable();
+            $table->integer('capacity');
             $table->string('equipment')->nullable();
             $table->string('status')->default('available');
             $table->timestamps();

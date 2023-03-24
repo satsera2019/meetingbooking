@@ -84,6 +84,7 @@ Route::namespace('AdminPanel')->name('admin-panel.')->prefix('admin-panel')->gro
             Route::get('/{room}', [RoomController::class, 'edit'])->name('edit');
             Route::post('/{room}', [RoomController::class, 'update'])->name('update');
             Route::delete('/{room}/destroy', [RoomController::class, 'destroyRoom'])->name('destroy');
+            Route::delete('/image/{image}/destroy', [RoomController::class, 'destroyImage'])->name('destroyImage');
         });
     });
 });

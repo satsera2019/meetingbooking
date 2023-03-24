@@ -63,7 +63,7 @@ class CreateAdminCommand extends Command
                 'password' => Hash::make($password),
                 'role' => 'admin',
             ]);
-            $this->info('Admin user ' . $user->first_name . ' ' . $user->first_name . ' created successfully!');
+            $this->info('Admin user ' . $user->first_name . ' ' . $user->last_name . ' created successfully!');
         } catch (\Exception $e) {
             $this->error($e->getMessage());
             return;

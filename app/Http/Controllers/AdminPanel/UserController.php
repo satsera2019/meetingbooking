@@ -26,7 +26,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->all());
         $users =  $this->userRepository->getUsersWithFilters($request);
         return view('admin-panel.users.index', compact('users'));
     }
@@ -40,7 +39,7 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
         $this->userRepository->createUser($validatedData);
-        return redirect()->route('admin-panel.users.index')->with(['message' => "User created successfully."]);
+        return redirect()->route('admin-panel.users.index')->with(['success' => true, 'message' => "User created successfully."]);
     }
 
     public function edit(User $user)

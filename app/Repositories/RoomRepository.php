@@ -39,4 +39,16 @@ class RoomRepository implements RoomRepositoryInterface
             'equipment' => $request['equipment'],
         ]);
     }
+
+    public function updateRoom(Room $room, $request)
+    {
+        return $room->update([
+            'room_number' => $request['room_number'],
+            'room_name' => $request['room_name'],
+            'location' => $request['location'],
+            'capacity' => $request['capacity'],
+            'equipment' => $request['equipment'],
+            'status' => $request['status'],
+        ]);
+    }
 }

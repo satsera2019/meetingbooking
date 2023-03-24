@@ -34,11 +34,11 @@ class MainController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        $result = Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 'user',]);
+        $result = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
         if ($result) {
             return redirect()->route('user-panel.index');
         }
-        return back()->with(['error' => 'Invalid credentials.']);
+        return back()->with(['success' => false, 'error' => 'Invalid credentials.']);
     }
 
     public function logout(Request $request)

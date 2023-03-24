@@ -6,10 +6,10 @@
 
 @section('content')
     <div class="card card-primary col-12">
-        <div class="card-body">add room</div>
+        <div class="card-body">Add Room</div>
     </div>
     <div class="card card-primary col-12">
-        <form class="check-disable" onsubmit="generateDates()" action="{{ route('admin-panel.rooms.store') }}"
+        <form class="check-disable" action="{{ route('admin-panel.rooms.store') }}"
             enctype="multipart/form-data" method="post">
             @csrf
             <div class="card-body">
@@ -55,39 +55,11 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-12">
-                        <div class="form-group clearfix">
-                            @foreach ($day_of_weeks as $key => $day)
-                                <div class="row">
-                                    <div class="form-group col-1">
-                                        <input type="hidden" name="day_of_week[{{ $key }}][day_of_week]"
-                                            value="{{ $key }}">
-                                        <input type="checkbox" id="{{ $day }}"
-                                            name="day_of_week[{{ $key }}][is_active]" value="1">
-                                        <label for="monday">{{ $day }}</label>
-                                    </div>
-                                    <div class="form-group col-2">
-                                        <label for="location">start time</label>
-                                        <input type="time" class="form-control"
-                                            name="day_of_week[{{ $key }}][start_time]"
-                                            step="600" min="09:00" max="17:00">
-                                    </div>
-                                    <div class="form-group col-2">
-                                        <label for="location">end time</label>
-                                        <input type="time" class="form-control"
-                                            name="day_of_week[{{ $key }}][end_time]">
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div> --}}
-
                     <div>
                         <label>Choose Images</label>
-                        <input id="images" type="file" class="form-control" name="images[]" placeholder="address" multiple>
+                        <input id="images" type="file" class="form-control" name="images[]" placeholder="address"
+                            multiple>
                     </div>
-
-                    
 
                 </div>
 

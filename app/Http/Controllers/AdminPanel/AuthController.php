@@ -23,7 +23,7 @@ class AuthController extends Controller
         if ($result) {
             return redirect()->route('admin-panel.users.index');
         }
-        return redirect()->back();
+        return back()->with(['success' => false, 'error' => "Incorrect credentials."]);
     }
 
     public function logout(Request $request)

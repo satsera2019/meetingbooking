@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdateRoomRequest extends FormRequest
 {
@@ -24,13 +23,13 @@ class UpdateRoomRequest extends FormRequest
     {
         return [
             'room_number' => ['required', 'numeric'],
-            'room_name' => ['nullable', 'string', 'max:255'],
+            'room_name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
-            'capacity' => ['nullable', 'numeric'],
+            'capacity' => ['required', 'numeric'],
             'equipment' => ['nullable', 'string'],
-            'start_time' => ['time'],
-            'end_time' => ['time'],
             'status' => ['string'],
+
+            'images.*' => ['image', 'mimes:jpeg,png,jpg,gif', 'dimensions:min_width=1000,min_height=1000'],
         ];
     }
 }
