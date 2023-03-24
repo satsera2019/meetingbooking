@@ -66,25 +66,20 @@
 
     <div class="row mt-4">
         @foreach ($rooms as $room)
-            <div class="card" style="width: 18rem;">
-                {{-- @foreach ($room->images as $image)
-                    <img src="{{ asset('images/room_image/' . $image->image_url) }}" class="card-img-top" alt="...">
-                @endforeach --}}
+            <div class="card col-md-4 col-sm-6 col-12">
                 <img src="{{ asset('images/room_image/' . $room->images[0]->image_url) }}" class="card-img-top"
-                    alt="...">
+                    alt="room image">
                 <div class="card-body">
                     <h5 class="card-title">{{ $room->room_number }}</h5>
                     <p class="card-text">{{ $room->room_name }}</p>
 
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-success blue-btn" data-bs-toggle="modal"
                         data-bs-target="#create-modal-{{ $room->id }}">
                         Book Now
                     </button>
                 </div>
             </div>
 
-            <!-- Modal -->
             <div class="modal fade" id="create-modal-{{ $room->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -99,23 +94,17 @@
                                 <div class="mb-3">
                                     <label for="start_time" class="form-label">Start Time</label>
                                     <input type="datetime-local" class="form-control" id="start_time" name="start_time"
-                                        value="{{ old('start_time') }}"
-                                        {{-- min="{{ date('Y-m-d\TH:i', strtotime('now')) }}" --}}
-                                        {{-- step='86400' --}}
-                                        >
+                                        value="{{ old('start_time') }}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="end_time" class="form-label">End Time</label>
                                     <input type="datetime-local" class="form-control" id="end_time" name="end_time"
-                                        value="{{ old('end_time') }}"
-                                        {{-- min="{{ date('Y-m-d\TH:i', strtotime('now')) }}" --}}
-                                        {{-- step='86400' --}}
-                                        >
+                                        value="{{ old('end_time') }}">
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success">book</button>
+                                <button type="submit" class="btn btn-success blue-btn">book</button>
                             </div>
                         </form>
                     </div>

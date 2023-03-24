@@ -1,10 +1,11 @@
 @extends('admin-panel.layouts.app')
 @section('content')
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <div class="row justify-content-center py-5">
-        <div class="card col-6">
+        <div class="card col-lg-4 col-md-6 col-12">
             <div class="card-body login-card-body">
                 <div class="card card-info">
-                    <div class="card-header">
+                    <div class="card-header tod-bg-blue">
                         <h3 class="card-title"></h3>
                     </div>
                     <form class="form-horizontal" action="{{ route('user-panel.login') }}" method="POST">
@@ -26,7 +27,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-info">Sign in</button>
+                            <button type="submit" class="btn btn-info blue-btn">Sign in</button>
                         </div>
                     </form>
 

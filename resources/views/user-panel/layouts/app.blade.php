@@ -10,10 +10,18 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <!-- bootstrap.min.css -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    {{-- font-awesome/6.3.0 --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" 
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     {{-- toastr.min.css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">
     <!-- toastr v2.1.3 js -->
     <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+
+    {{-- main.css --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 </head>
 
 <body>
