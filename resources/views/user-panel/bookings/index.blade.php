@@ -22,10 +22,9 @@
                         <td>{{ $booking->end_time }}</td>
                         <td>
                             <div class="row">
-                                <a href="" class="col">
-                                    <button type="button" class="btn btn-outline-primary btn-sm w-100"><i
-                                            class="fa-solid fa-edit"></i> edit</button>
-                                </a>
+                                <button type="button" class="btn btn-outline-primary btn-sm w-100 col" data-bs-toggle="modal"
+                                    data-bs-target="#edit-booking-modal-{{ $booking->id }}"><i
+                                        class="fa-solid fa-edit"></i> edit</button>
                                 <button type="button" class="btn btn-outline-danger btn-sm col" data-bs-toggle="modal"
                                     data-bs-target="#destroy-booking-modal-{{ $booking->id }}">
                                     <i class="fa fa-trash" aria-hidden="true"></i>Delete
@@ -34,6 +33,35 @@
                         </td>
                     </tr>
 
+                    <div class="modal fade" id="edit-booking-modal-{{ $booking->id }}" tabindex="-1"
+                        aria-labelledby="edit-booking-modal-{{ $booking->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="edit-booking-modal-{{ $booking->id }}">Update
+                                        Booking Time</h1>
+                                </div>
+                                <form action="{{ route('user-panel.bookings.edit', $booking) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="start_time" class="form-label">Start Time</label>
+                                            <input type="datetime-local" class="form-control" id="start_time" name="start_time"
+                                                value="{{ $booking->start_time }}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="end_time" class="form-label">End Time</label>
+                                            <input type="datetime-local" class="form-control" id="end_time" name="end_time"
+                                                value="{{ $booking->end_time }}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success blue-btn">update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="modal fade" id="destroy-booking-modal-{{ $booking->id }}" tabindex="-1"
                         aria-labelledby="destroy-booking-modal-{{ $booking->id }}" aria-hidden="true">
@@ -51,7 +79,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <div class="modal-footer justify-content-between">
-                                        <button type="submit" class="btn btn-success float-right">
+                                        <button type="submit" class="btn btn-success float-right blue-btn">
                                             Yes
                                         </button>
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">

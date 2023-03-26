@@ -52,6 +52,7 @@ Route::namespace('UserPanel')->name('user-panel.')->prefix('user-panel')->group(
             Route::get('/index', [BookingController::class, 'index'])->name('index');
             Route::get('/create', [BookingController::class, 'create'])->name('create');
             Route::post('/{room}/store', [BookingController::class, 'store'])->name('store');
+            Route::post('/{booking}/edit', [BookingController::class, 'edit'])->name('edit');
             Route::delete('/{booking}/destroy', [BookingController::class, 'destroyBooking'])->name('destroy');
         });
     });

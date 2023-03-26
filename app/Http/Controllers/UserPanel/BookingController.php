@@ -30,7 +30,6 @@ class BookingController extends Controller
         $this->bookingSlotRepository = $bookingSlotRepository;
     }
 
-
     public function index(Request $request)
     {
         $bookings = $this->bookingRepository->getUserBookingWithFilters($request);
@@ -50,7 +49,17 @@ class BookingController extends Controller
             return back()->with(['success' => false, 'error' => $checkbookingValid['message']]);
         }
         $this->bookingRepository->createBooking(auth()->user()->id, $room->id, $request->start_time, $request->end_time);
-        return back()->with(['success' => true, 'message' => 'Booked successfully.']);
+        return back()->with(['success' => true, 'message' => 'Booking created successfully.']);
+    }
+
+    public function edit(Booking $booking, Request $request)
+    {
+        $checkbookingValid = $this->bookingRepository->checkBookingValid($request->start_time, $request->end_time, $booking->room_id);
+        if (!$checkbookingValid['success']) {
+            return back()->with(['success' => false, 'error' => $checkbookingValid['message']]);
+        }
+        $this->bookingRepository->updateBooking($booking,  $request->start_time, $request->end_time);
+        return back()->with(['success' => true, 'message' => 'Booking updated successfully.']);
     }
 
     public function destroyBooking(Booking $booking): RedirectResponse

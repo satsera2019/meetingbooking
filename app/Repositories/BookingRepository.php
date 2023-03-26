@@ -69,4 +69,12 @@ class BookingRepository implements BookingRepositoryInterface
             'end_time' => $end_time,
         ]);
     }
+
+    public function updateBooking(Booking $booking, string $start_time, string $end_time)
+    {
+        return $booking->update([
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+        ]);
+    }
 }
