@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $room->room_number }}</h5>
                         <p class="card-text">{{ $room->room_name ?? 'Room Name' }}</p>
-                        <a href="{{ route('tablet-panel.rooms.detail', $room) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('tablet-panel.rooms.detail', $room) }}" class="btn btn-primary blue-btn">View Details</a>
                     </div>
                 </div>
             @endforeach

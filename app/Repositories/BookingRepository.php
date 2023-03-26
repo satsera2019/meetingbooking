@@ -24,7 +24,7 @@ class BookingRepository implements BookingRepositoryInterface
     public function getBookingByRoom($room_id)
     {
         $query = Booking::where('room_id', $room_id)->where('start_time', '>=', Carbon::today())->where('end_time', '<=', Carbon::tomorrow());
-        return $query->get()->sortByDesc('id');
+        return $query->get();
     }
 
     public function getUserBookingWithFilters($request)

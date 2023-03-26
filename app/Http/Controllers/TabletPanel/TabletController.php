@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\TabletPanel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateBookingRequest;
 use App\Models\Room;
-use App\Models\User;
 use App\Repositories\BookingRepository;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -23,11 +23,22 @@ class TabletController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index(Room $room, Request $request)
+    public function index(Request $request)
     {
-        $room_id = 8;
-        $room_bookings = $this->bookingRepository->getBookingByRoom($room_id);
-        return view('tablet-panel.index', compact('room_bookings'));
+        /* Temporal logic of booking */
+        $radom_room = Room::inRandomOrder()->first();
+        $room_bookings = [];
+        $room = [];
+        if ($radom_room !== null) {
+            $room = $radom_room->first();
+            $roomRepo = new RoomRepository;
+            $roomStatus = $roomRepo->checkRoomStatus($room->id);
+            $room->status = $roomStatus['room_status'];
+            $room_bookings = $this->bookingRepository->getBookingByRoom($radom_room->id);
+        }
+        /* Temporal logic of booking */
+        // todo $room_bookings = $this->bookingRepository->getBookingByRoom($room_id);
+        return view('tablet-panel.index', compact('room_bookings', 'room'));
     }
 
     public function rooms(Request $request)
@@ -51,7 +62,7 @@ class TabletController extends Controller
         return view('tablet-panel.meetings.index', compact('bookings'));
     }
 
-    public function createBooking(Room $room, Request $request)
+    public function createBooking(CreateBookingRequest $request, Room $room)
     {
         $checkUserValid = $this->userRepository->checkUserValid($request->user_id, $request->password);
         if (!$checkUserValid['success']) {

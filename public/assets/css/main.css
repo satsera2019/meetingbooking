@@ -1,9 +1,10 @@
-.color-blue {
-    color: #213855 !important;
-}
 
 .tod-bg-blue {
     background-color: #213855 !important;
+}
+
+.tod-color-light {
+    color: #ffc43b !important;
 }
 
 .blue-btn {

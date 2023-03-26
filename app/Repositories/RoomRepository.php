@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Booking;
 use App\Models\Room;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RoomRepository implements RoomRepositoryInterface
@@ -50,5 +52,18 @@ class RoomRepository implements RoomRepositoryInterface
             'equipment' => $request['equipment'],
             'status' => $request['status'],
         ]);
+    }
+
+    public function checkRoomStatus(int $room_id)
+    {
+        $room = Room::find($room_id);
+        $bookings = Booking::where('start_time', '<=', date('Y-m-d H:i:s'))->where('end_time', '>=', date('Y-m-d H:i:s'))->first();
+        if ($bookings) {
+            return ["success" => true, "room_status" => Room::ROOM_STATUSES['BOOKED_STATUS']];
+        }
+        if ($room->status === Room::ROOM_STATUSES['UNAVAILABLE_STATUS']) {
+            return ["success" => false, "room_status" => Room::ROOM_STATUSES['UNAVAILABLE_STATUS']];
+        }
+        return ["success" => false, "room_status" => Room::ROOM_STATUSES['AVAILABLE_STATUS']];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,15 +28,16 @@ class Room extends Model
         'status',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope('deleted_at', function (Builder $builder) {
+            $builder->where('status', self::ROOM_STATUSES['AVAILABLE_STATUS']);
+        });
+    }
 
     public function bookingSlots()
     {
         return $this->hasMany(BookingSlot::class)->orderBy('day_of_week');
-    }
-
-    public function bookingSlotByDate($start)
-    {
-        return $this->hasMany(BookingSlot::class)->where('start_time' >= '')->orderBy('day_of_week');
     }
 
     public function images()

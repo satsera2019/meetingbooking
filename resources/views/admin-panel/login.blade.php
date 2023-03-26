@@ -1,10 +1,11 @@
 @extends('admin-panel.layouts.app')
 @section('content')
+<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 <div class="card py-5">
     <div class="card-body login-card-body">
         <div class="card card-info">
-            <div class="card-header">
-                <h3 class="card-title">Horizontal Form</h3>
+            <div class="card-header tod-bg-blue">
+                <h3 class="card-title"></h3>
             </div>
             <form class="form-horizontal" action="{{ route('admin-panel.login') }}" method="POST">
                 @csrf
@@ -23,7 +24,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-info">Sign in</button>
+                    <button type="submit" class="btn btn-info blue-btn">Sign in</button>
                 </div>
             </form>
 

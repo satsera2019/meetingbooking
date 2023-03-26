@@ -10,4 +10,5 @@ interface RoomRepositoryInterface
     public function getRoomsWithFilters(Request $request);
     public function createRoom(Request $request);
     public function updateRoom(Room $room, Request $request);
+    public function checkRoomStatus(int $room_id);
 }

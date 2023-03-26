@@ -63,7 +63,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <select class="form-select" aria-label="Default select example" name="user_id">
-                                    <option selected>Select User</option>
+                                    <option selected value="">Select User</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
                                     @endforeach
