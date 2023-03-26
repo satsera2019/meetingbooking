@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\UserPanel;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
-use App\Models\BookingSlot;
 use App\Models\Room;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
-use App\Repositories\Interfaces\BookingSlotRepositoryInterface;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -18,16 +14,10 @@ class BookingController extends Controller
 {
     private $roomRepository;
     private $bookingRepository;
-    private $bookingSlotRepository;
 
-    public function __construct(
-        RoomRepositoryInterface $roomRepository,
-        BookingRepositoryInterface $bookingRepository,
-        BookingSlotRepositoryInterface $bookingSlotRepository
-    ) {
+    public function __construct(RoomRepositoryInterface $roomRepository, BookingRepositoryInterface $bookingRepository) {
         $this->roomRepository = $roomRepository;
         $this->bookingRepository = $bookingRepository;
-        $this->bookingSlotRepository = $bookingSlotRepository;
     }
 
     public function index(Request $request)

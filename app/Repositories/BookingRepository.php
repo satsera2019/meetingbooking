@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Booking;
-use App\Models\BookingSlot;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use Carbon\Carbon;
 

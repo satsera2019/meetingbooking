@@ -5,8 +5,6 @@ namespace App\Repositories;
 use App\Models\Booking;
 use App\Models\Room;
 use App\Repositories\Interfaces\RoomRepositoryInterface;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class RoomRepository implements RoomRepositoryInterface
 {

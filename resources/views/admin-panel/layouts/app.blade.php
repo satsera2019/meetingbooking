@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     {{-- toastr.min.css --}}
     <link rel="stylesheet" href="{{ asset('assets/css/toastr.min.css') }}">
-    {{-- font-awesome/6.1.2 --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- font-awesome/6.3.0 --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" 
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- jQuery v3.6.4 -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <!-- toastr v2.1.3 js -->

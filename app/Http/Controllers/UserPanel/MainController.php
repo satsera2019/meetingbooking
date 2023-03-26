@@ -4,9 +4,6 @@ namespace App\Http\Controllers\UserPanel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Models\Booking;
-use App\Models\User;
 use App\Repositories\Interfaces\BookingRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;

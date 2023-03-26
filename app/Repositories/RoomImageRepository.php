@@ -2,10 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\BookingSlot;
 use App\Models\RoomImage;
-use App\Repositories\Interfaces\RoomImageRepositoryInterface;
-use Illuminate\Http\Request;
 
 class RoomImageRepository
 {
