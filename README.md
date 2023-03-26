@@ -1,8 +1,10 @@
 ## About Project
 
-MeetingBooking is a platform for any type of organization or company to offer its customers a meeting room booking system.
-The platform combines an admin panel, a user panel, and a tablet panel.The project is in alpha version.
-Easily adaptable to new frameworks.
+MeetingBooking is a promising platform that provides a convenient and efficient way for organizations and companies to manage and schedule meeting rooms. The platform's intuitive interface, consisting of the admin panel, user panel, and tablet panel, makes it easy for both administrators and customers to book meeting rooms seamlessly.
+
+The project is in its alpha version, but its adaptability to new frameworks promises to make it a versatile and scalable solution for organizations of any size. MeetingBooking's potential to simplify meeting room management and improve the customer experience makes it a valuable asset for any organization looking to streamline its operations.
+
+Overall, MeetingBooking shows great potential to revolutionize the way organizations manage their meeting rooms, and it's worth considering for anyone looking for a convenient and efficient solution.
 
 ## Commands
     To create an admin user, use the command: php artisan admin:create
